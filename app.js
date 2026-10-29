@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import HomeRoute from "./src/routes/homeRoutes.js";
 
@@ -5,7 +7,7 @@ class App {
     constructor() {
         this.app = express();
         this.middlewares();
-        this.routes(); 
+        this.routes();
     }
 
     middlewares() {
@@ -14,7 +16,7 @@ class App {
     }
 
     routes() {
-        this.app.use("/", HomeRoute)
+        this.app.use("/", HomeRoute);
     }
 }
 
