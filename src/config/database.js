@@ -16,6 +16,7 @@ module.exports = {
     },
     dialectOptions: {
         timezone: "America/Sao_Paulo",
+        connectTimeout: 6000
     },
     timezone: "America/Sao_Paulo",
 };
