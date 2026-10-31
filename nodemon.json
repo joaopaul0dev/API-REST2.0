@@ -1,4 +1,8 @@
 {
+    "watch": ["src", "app.js", "server.js"],
+    "ext": "js,mjs,cjs,json",
+    "ignore": ["node_modules", ".git"],
+    "legacyWatch": true,
     "execMap": {
         "js": "node -r sucrase/register"
     }
