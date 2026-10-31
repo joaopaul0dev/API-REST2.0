@@ -4,34 +4,16 @@ export default class Aluno extends Model {
     static init(sequelize) {
         return super.init(
             {
-                nome: {
-                    type: Sequelize.STRING,
-                    allowNull: false,
-                },
-                sobrenome: {
-                    type: Sequelize.STRING,
-                    allowNull: false,
-                },
-                email: {
-                    type: Sequelize.STRING,
-                    allowNull: false,
-                },
-                idade: {
-                    type: Sequelize.INTEGER,
-                    allowNull: false,
-                },
-                peso: {
-                    type: Sequelize.FLOAT,
-                    allowNull: false,
-                },
-                altura: {
-                    type: Sequelize.FLOAT,
-                    allowNull: false,
-                },
+                nome: Sequelize.STRING,
+                sobrenome: Sequelize.STRING,
+                email: Sequelize.STRING,
+                idade: Sequelize.INTEGER,
+                peso: Sequelize.FLOAT,
+                altura: Sequelize.FLOAT,
             },
             {
                 sequelize,
-                modelName: "Aluno",
+                modelName: "alunos",
             },
         );
     }
