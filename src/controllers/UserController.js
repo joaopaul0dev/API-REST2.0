@@ -1,108 +1,78 @@
-import User from "../models/User";
+import User from '../models/User';
 
 class UserController {
-    async store(req, res) {
-        try {
-            const newUser = await User.create(req.body);
-            return res.json(newUser);
-        } catch (error) {
-            if (error && Array.isArray(error.errors)) {
-                return res.status(400).json({
-                    errors: error.errors.map((err) => err.message),
-                });
-            }
-
-            console.error("Erro ao criar usuario:", error);
-            return res.status(500).json({
-                errors: ["Erro interno no servidor"],
-            });
-        }
+  async store(req, res) {
+    try {
+      const novoUser = await User.create(req.body);
+      const { id, nome, email } = novoUser;
+      return res.json({ id, nome, email });
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
     }
+  }
 
-    async index(req, res) {
-        try {
-            const users = await User.findAll();
-            return res.json(users);
-        } catch {
-            return res.json(null);
-        }
+  // Index
+  async index(req, res) {
+    try {
+      const users = await User.findAll({ attributes: ['id', 'nome', 'email'] });
+      return res.json(users);
+    } catch (e) {
+      return res.json(null);
     }
+  }
 
-    async show(req, res) {
-        try {
-            const { id } = req.params;
-            const user = await User.findByPk(id);
-            return res.json(user);
-        } catch {
-            return res.json("User not found");
-        }
+  // Show
+  async show(req, res) {
+    try {
+      const user = await User.findByPk(req.params.id);
+
+      const { id, nome, email } = user;
+      return res.json({ id, nome, email });
+    } catch (e) {
+      return res.json(null);
     }
+  }
 
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({
-                    errors: ["Missing ID parameter"],
-                });
-            }
+  async update(req, res) {
+    try {
+      const user = await User.findByPk(req.userId);
 
-            const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(400).json({
+          errors: ['Usuário não existe'],
+        });
+      }
 
-            if (!user) {
-                return res.status(404).json({
-                    errors: ["User not found"],
-                });
-            }
-
-            const updatedUser = await user.update(req.body);
-
-            return res.json(updatedUser);
-        } catch (e) {
-            if (e && Array.isArray(e.errors)) {
-                return res.status(400).json({
-                    errors: e.errors.map((err) => err.message),
-                });
-            }
-
-            return res.status(500).json({
-                errors: ["Erro interno no servidor"],
-            });
-        }
+      const novosDados = await user.update(req.body);
+      const { id, nome, email } = novosDados;
+      return res.json({ id, nome, email });
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
     }
+  }
 
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({
-                    errors: ["Missing ID parameter"],
-                });
-            }
+  async delete(req, res) {
+    try {
+      const user = await User.findByPk(req.userId);
 
-            const user = await User.findByPk(id);
-
-            if (!user) {
-                return res.status(404).json({
-                    errors: ["User not found"],
-                });
-            }
-
-            await user.destroy();
-
-            return res.json(user);
-        } catch (error) {
-            if (error && Array.isArray(error.errors)) {
-                return res.status(400).json({
-                    errors: error.errors.map((err) => err.message),
-                });
-            }
-
-            return res.status(500).json({
-                errors: ["Erro interno no servidor"],
-            });
-        }
+      if (!user) {
+        return res.status(400).json({
+          errors: ['Usuário não existe'],
+        });
+      }
+      const { id, nome, email } = user;
+      await user.destroy();
+      return res.json({ id, nome, email });
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
     }
+  }
 }
 
 export default new UserController();
