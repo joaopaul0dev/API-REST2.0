@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
 import { resolve } from "path";
 dotenv.config();
-import "./src/database/index.js";
+import "./database/index.js";
 import express from "express";
 
-import HomeRoute from "./src/routes/homeRoutes.js";
-import UserRoute from "./src/routes/UserRoutes.js";
-import TokenRoute from "./src/routes/tokenRoutes.js";
-import AlunoRoute from "./src/routes/alunoRoutes.js";
-import fotoRoute from "./src/routes/fotoRoutes.js";
+import HomeRoute from "./routes/homeRoutes.js";
+import UserRoute from "./routes/UserRoutes.js";
+import TokenRoute from "./routes/tokenRoutes.js";
+import AlunoRoute from "./routes/alunoRoutes.js";
+import fotoRoute from "./routes/fotoRoutes.js";
 
 class App {
     constructor() {
